@@ -110,12 +110,12 @@ class SampleView: UIView {
                     }else{
                         isYellowArr[i][j]=true
                     }
+                    // 適当に範囲指定して画面上半分を再描画
+                    //self.setNeedsDisplay()
+                    self.setNeedsDisplayInRect(CGRectMake(self.bounds.origin.x,self.bounds.origin.y,self.bounds.size.width,300))
                 }
             }
         }
-        // 適当に範囲指定して画面上半分を再描画
-        //self.setNeedsDisplay()
-        self.setNeedsDisplayInRect(CGRectMake(self.bounds.origin.x,self.bounds.origin.y,self.bounds.size.width,300))
     }
     
 /* その他のタッチ動作もあるらしい
