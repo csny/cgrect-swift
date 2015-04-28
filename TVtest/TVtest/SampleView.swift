@@ -10,13 +10,13 @@ import UIKit
 import QuartzCore
 
 class SampleView: UIView {
-    // 方眼のタッチ有無を格納する配列
-    var isGreenArr = [[Bool]](count: 8, repeatedValue: [Bool](count: 6, repeatedValue: false))
+    // 方眼のタッチ有無を格納する二次元配列を
+    // インスタンス変数として準備し、初期化
+    var isYellowArr = [[Bool]](count: 8, repeatedValue: [Bool](count: 6, repeatedValue: false))
     
     required init(coder: NSCoder) {
-        super.init(coder: coder)
         // こっちは呼ばれないよ
-        self.backgroundColor = UIColor.clearColor()
+        super.init(coder: coder)
         println("initNSCoder")
     }
     override init(frame: CGRect) {
@@ -50,10 +50,10 @@ class SampleView: UIView {
         }
         CGContextStrokePath(context)
         
-        // フラグに応じて矩形を描画、イベントで一部再読み込みされる
+        // フラグに応じて矩形を描画、タッチイベントで再描画される
         for(var i: Int=0;i<8;i++){
             for(var j: Int=0;j<6;j++){
-                if(isGreenArr[i][j]){
+                if(isYellowArr[i][j]){
                     CGContextSetFillColor(context, yellow)
                     CGContextFillRect(context, CGRectMake(CGFloat(i)*50,CGFloat(j)*50,50,50))
                 }else{
@@ -99,10 +99,10 @@ class SampleView: UIView {
         for(var i: Int=0;i<8;i++){
             for(var j: Int=0;j<6;j++){
                 if CGRectContainsPoint(CGRectMake(CGFloat(i)*50,CGFloat(j)*50,50,50), pos) {
-                    if(isGreenArr[i][j]){
-                        isGreenArr[i][j]=false
+                    if(isYellowArr[i][j]){
+                        isYellowArr[i][j]=false
                     }else{
-                        isGreenArr[i][j]=true
+                        isYellowArr[i][j]=true
                     }
                 }
             }
