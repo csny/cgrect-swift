@@ -13,7 +13,11 @@ class SampleView: UIView {
     // 方眼のタッチ有無を格納する二次元配列を
     // インスタンス変数として準備し、初期化
     var isYellowArr = [[Bool]](count: 8, repeatedValue: [Bool](count: 6, repeatedValue: false))
+    // 列数と行数
+    let COLUMN_NUM : Int = 8
+    let ROW_NUM : Int = 6
     
+    // SampleViewクラスの初期化処理
     required init(coder: NSCoder) {
         // こっちは呼ばれないよ
         super.init(coder: coder)
@@ -24,11 +28,13 @@ class SampleView: UIView {
         self.backgroundColor = UIColor.clearColor()
     }
     
+    // 描画処理
+    // 最初１回とsetNeedsDisplayで呼ばれる
     override func drawRect(rect: CGRect) {
         // 描画管理の構造体contextを初期化
         let context: CGContextRef = UIGraphicsGetCurrentContext()
         
-        // 色を定義
+        // 色を定義[R,G,B,透明度]
         let red: [CGFloat] = [1.0, 0.0, 0.0, 1.0]
         let blue: [CGFloat] = [0.0, 0.0, 1.0, 1.0]
         let cyan: [CGFloat] = [0.5, 0.8, 1.0, 1.0]
@@ -51,8 +57,8 @@ class SampleView: UIView {
         CGContextStrokePath(context)
         
         // フラグに応じて矩形を描画、タッチイベントで再描画される
-        for(var i: Int=0;i<8;i++){
-            for(var j: Int=0;j<6;j++){
+        for(var i: Int=0;i<COLUMN_NUM;i++){
+            for(var j: Int=0;j<ROW_NUM;j++){
                 if(isYellowArr[i][j]){
                     CGContextSetFillColor(context, yellow)
                     CGContextFillRect(context, CGRectMake(CGFloat(i)*50,CGFloat(j)*50,50,50))
@@ -96,8 +102,8 @@ class SampleView: UIView {
         var pos: CGPoint = touch.locationInView(self)
         
         // タッチ位置と方眼位置を比較
-        for(var i: Int=0;i<8;i++){
-            for(var j: Int=0;j<6;j++){
+        for(var i: Int=0;i<COLUMN_NUM;i++){
+            for(var j: Int=0;j<ROW_NUM;j++){
                 if CGRectContainsPoint(CGRectMake(CGFloat(i)*50,CGFloat(j)*50,50,50), pos) {
                     if(isYellowArr[i][j]){
                         isYellowArr[i][j]=false
