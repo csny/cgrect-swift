@@ -34,13 +34,17 @@ class SampleView: UIView {
         // 描画管理の構造体contextを初期化
         let context: CGContextRef = UIGraphicsGetCurrentContext()
         
+        // フラグに応じて矩形を描画、タッチイベントで再描画される
+        if !drawYellSqua(context) {
+            println("drawYellSqua,error")
+            return
+        }
+        
         // 色を定義[R,G,B,透明度]
         let red: [CGFloat] = [1.0, 0.0, 0.0, 1.0]
         let blue: [CGFloat] = [0.0, 0.0, 1.0, 1.0]
         let cyan: [CGFloat] = [0.5, 0.8, 1.0, 1.0]
         let green: [CGFloat] = [0.0, 1.0, 0.0, 1.0]
-        let white: [CGFloat] = [1.0, 1.0, 1.0, 0.5]
-        let yellow: [CGFloat] = [1.0, 1.0, 0.0, 0.5]
         
         // グリッドを描画
         CGContextSetStrokeColor(context, cyan)
@@ -55,19 +59,6 @@ class SampleView: UIView {
             CGContextAddLineToPoint(context, CGFloat(x), self.bounds.size.height)
         }
         CGContextStrokePath(context)
-        
-        // フラグに応じて矩形を描画、タッチイベントで再描画される
-        for(var i: Int=0;i<COLUMN_NUM;i++){
-            for(var j: Int=0;j<ROW_NUM;j++){
-                if(isYellowArr[i][j]){
-                    CGContextSetFillColor(context, yellow)
-                    CGContextFillRect(context, CGRectMake(CGFloat(i)*50,CGFloat(j)*50,50,50))
-                }else{
-                    CGContextSetFillColor(context, white);
-                    CGContextFillRect(context, CGRectMake(CGFloat(i)*50,CGFloat(j)*50,50,50))
-                }
-            }
-        }
         
         // 矩形を描画
         CGContextSetFillColor(context, green)
@@ -93,6 +84,27 @@ class SampleView: UIView {
         myLabel.backgroundColor = UIColor.cyanColor();
         // Viewにラベルを追加
         self.addSubview(myLabel)
+    }
+    
+    // フラグに応じて矩形を描画、タッチイベントで再描画される
+    func drawYellSqua(let conte: CGContextRef) -> Bool {
+        
+        let white: [CGFloat] = [1.0, 1.0, 1.0, 0.5]
+        let yellow: [CGFloat] = [1.0, 1.0, 0.0, 0.5]
+        
+        for(var i: Int=0;i<COLUMN_NUM;i++){
+            for(var j: Int=0;j<ROW_NUM;j++){
+                if(isYellowArr[i][j]){
+                    CGContextSetFillColor(conte, yellow)
+                    CGContextFillRect(conte, CGRectMake(CGFloat(i)*50,CGFloat(j)*50,50,50))
+                }else{
+                    CGContextSetFillColor(conte, white);
+                    CGContextFillRect(conte, CGRectMake(CGFloat(i)*50,CGFloat(j)*50,50,50))
+                }
+            }
+        }
+        
+        return true
     }
     
     // タッチイベント発生時の処理

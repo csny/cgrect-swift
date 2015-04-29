@@ -14,15 +14,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // ViewController
         self.view.backgroundColor = UIColor.whiteColor()
-        addVIEWS()
+        if !addVIEWS() {
+            println("addVIEWS, error")
+            return
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func addVIEWS() {
+    func addVIEWS() -> Bool {
         // 自前UIViewの定義
         // UIViewController.viewの座標取得
         var x:CGFloat = self.view.bounds.origin.x
@@ -63,6 +66,8 @@ class ViewController: UIViewController {
         // self.view.bringSubviewToFront(myView)
         // ボタンをViewに追加する.
         self.view.addSubview(resetBtn)
+        
+        return true
     }
     
     // ボタン動作
@@ -80,7 +85,10 @@ class ViewController: UIViewController {
         */
         
         // view再作成
-        addVIEWS()
+        if !addVIEWS() {
+            println("addVIEWS, error")
+            return
+        }
     }
 }
 
